@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Kabul Serina",
+        "email": "kabulGha@example.com",
+        "cost": "2300",
+        "imageUrl": "assets/images/hotel"
+    },
+    {
+        "id": 2,
+        "name": "Kabul Serina",
+        "email": "kabulafghansitan@example.com",
+        "cost": "2300",
+        "imageUrl": "assets/images/hotel"
+    },
+    {
+        "id": 3,
+        "name": "Kabul Serina",
+        "email": "kabulserina@example.com",
+        "cost": "2300",
+        "imageUrl": "assets/images/hotel"
+    }
+]
