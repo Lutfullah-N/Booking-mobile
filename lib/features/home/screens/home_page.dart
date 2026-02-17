@@ -36,7 +36,12 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
-              onTap: () {},
+              onTap: () {
+                // Example logout action
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Logged out')));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.help),
@@ -56,7 +61,12 @@ class _HomePageState extends State<HomePage> {
             textColor: Colors.white,
             offset: const Offset(-1, 4),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // NotificationService.showNotification(
+                //   title: 'New Notification',
+                //   body: 'You have 0 new notifications.',
+                // );
+              },
               icon: const Icon(Icons.notifications),
             ),
           ),

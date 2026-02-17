@@ -1,6 +1,3 @@
-import 'package:booking/features/auth/widgets/snack_bar.dart';
-import 'package:booking/shared/extras/prograss_idicator.dart';
-import 'package:booking/shared/widgets/splite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

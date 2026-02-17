@@ -84,6 +84,8 @@ class _JsonCardExampleState extends State<JsonCardExample> {
                       ElevatedButton(
                         onPressed: () {
                           // Example action
+                          Navigator.of(context)
+                              .pushReplacementNamed('/bookinglist');
                         },
                         child: Text("Book Now"),
                       ),
