@@ -1,0 +1,14 @@
+[
+    {
+        "id": "1",
+        "title": "Hotel Paradise",
+        "date": "2026-02-16",
+        "ImageUrl": "assets/images/hotel.png"
+    },
+    {
+        "id": "2",
+        "title": "Flight to Dubai",
+        "date": "2026-02-20",
+        "ImageUrl": "assets/images/flight.png"
+    }
+]
