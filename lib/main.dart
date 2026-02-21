@@ -63,10 +63,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-
-      /// ✅ Use AuthGate Here
-      home: const WelcomeScreen(), // change if you want AuthGate first
-
+      home: const WelcomeScreen(),
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginPage(),
@@ -79,7 +76,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// 🔐 Auth State Controller
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -88,7 +84,6 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        /// Loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -96,18 +91,12 @@ class AuthGate extends StatelessWidget {
         }
 
         final user = snapshot.data;
-
-        /// Not logged in
         if (user == null) {
           return const LoginPage();
         }
-
-        /// Email not verified
         if (!user.emailVerified) {
           return const EmailVerification();
         }
-
-        /// Logged in + verified
         return const HomePage();
       },
     );

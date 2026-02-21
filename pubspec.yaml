@@ -17,6 +17,8 @@ dependencies:
   firebase_auth: ^6.1.4
   cloud_firestore: ^6.1.2
   firebase_messaging: ^16.1.1
+  carousel_slider: ^5.0.0
+  dots_indicator: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +33,4 @@ flutter:
     - assets/booking.json
     - assets/images/logo.png
     - assets/images/
+    - assets/images/welcom.png
