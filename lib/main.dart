@@ -1,5 +1,6 @@
 import 'package:booking/features/auth/controller/email_verification.dart';
 import 'package:booking/features/auth/screens/log_in.dart';
+import 'package:booking/features/auth/screens/phone_sign_up.dart';
 import 'package:booking/features/auth/screens/sign_up.dart';
 import 'package:booking/features/home/screens/booking_page.dart';
 import 'package:booking/features/home/screens/home_page.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         '/verify': (context) => const EmailVerification(),
         '/homepage': (context) => const HomePage(),
         '/bookinglist': (context) => const BookingListPage(),
+        'phonesignin': (context) => const PhoneSignUp()
       },
     );
   }

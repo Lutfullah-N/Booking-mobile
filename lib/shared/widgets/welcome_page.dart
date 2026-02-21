@@ -75,10 +75,137 @@ class WelcomeScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  // Handle language change
+                  showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                      ),
+                      backgroundColor: Colors.white,
+                      builder: (BuildContext context) {
+                        String selectedLanguage = 'English';
+                        return StatefulBuilder(
+                          builder:
+                              (BuildContext context, StateSetter setState) {
+                            return Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text(
+                                    'Choose Language',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  RadioListTile(
+                                    value: "English",
+                                    title: const Text('English'),
+                                    // ignore: deprecated_member_use
+                                    groupValue: selectedLanguage,
+                                    // ignore: deprecated_member_use
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedLanguage = value!;
+                                      });
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: const Icon(
+                                        Icons.arrow_right_alt_rounded),
+                                    title: const Text('Others'),
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20)),
+                                          ),
+                                          backgroundColor: Colors.white,
+                                          builder: (BuildContext context) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(20),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Text(
+                                                      'Choose Language from List'),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  RadioListTile(
+                                                    value: 'Spanish',
+                                                    title:
+                                                        const Text('Spanish'),
+                                                    // ignore: deprecated_member_use
+                                                    groupValue:
+                                                        selectedLanguage,
+                                                    // ignore: deprecated_member_use
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedLanguage =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                  RadioListTile(
+                                                    value: 'Dari',
+                                                    title: const Text('Dari'),
+                                                    // ignore: deprecated_member_use
+                                                    groupValue:
+                                                        selectedLanguage,
+                                                    // ignore: deprecated_member_use
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedLanguage =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                  RadioListTile(
+                                                    value: 'Pashto',
+                                                    title: const Text('Pashto'),
+                                                    // ignore: deprecated_member_use
+                                                    groupValue:
+                                                        selectedLanguage,
+                                                    // ignore: deprecated_member_use
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedLanguage =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                  RadioListTile(
+                                                    value: 'Dutch',
+                                                    title: const Text('Dutch'),
+                                                    // ignore: deprecated_member_use
+                                                    groupValue:
+                                                        selectedLanguage,
+                                                    // ignore: deprecated_member_use
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedLanguage =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      });
                 },
                 icon: const Icon(
-                  Icons.language,
+                  Icons.translate,
                   color: Colors.white,
                 ),
               ),
@@ -99,21 +226,21 @@ class WelcomeScreen extends StatelessWidget {
                   const ImageCarouselWithDots(),
                   SizedBox(height: 20),
                   Container(
-                    color: const Color.fromARGB(249, 28, 80, 236),
+                    // color: const Color.fromARGB(249, 28, 80, 236),
                     width: double.infinity,
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Text(
                       'Welcome!',
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.07,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: MediaQuery.of(context).size.width * 0.07,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                       softWrap: true,
                       overflow: TextOverflow.visible,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(
@@ -122,56 +249,59 @@ class WelcomeScreen extends StatelessWidget {
                       'Enjoy Booking and \n Appointments',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 17,
                           color: Colors.white,
-                          fontWeight: FontWeight.w600),
+                          fontWeight: FontWeight.w300),
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     // Navigate to next screen
-                  //   },
-                  //   child: Container(
-                  //     padding: const EdgeInsets.symmetric(
-                  //         horizontal: 20, vertical: 15),
-                  //     decoration: BoxDecoration(
-                  //       color: const Color.fromARGB(255, 31, 158, 52),
-                  //       borderRadius: BorderRadius.circular(12),
-                  //     ),
-                  //     child: const Text(
-                  //       'Sign Up ',
-                  //       style: TextStyle(
-                  //           fontSize: 20,
-                  //           fontWeight: FontWeight.bold,
-                  //           color: Colors.black54),
-                  //     ),
-                  //   ),
-                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                          child: ElevatedButton(
-                              onPressed: () {}, child: const Text('Sign In'))),
-                      const SizedBox(
-                        width: 16,
+                      Container(
+                        margin: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
+                        width: 100,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/login');
+                            },
+                            child: const Text('Sign In')),
                       ),
-                      Expanded(
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Container(
+                          margin: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25)),
                           child: ElevatedButton(
-                              onPressed: () {}, child: const Text('Sign up')))
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/phonesignin');
+                              },
+                              child: const Text(
+                                'Sign up',
+                                style: TextStyle(
+                                    backgroundColor: Colors.black,
+                                    color: Colors.white),
+                              )))
                     ],
                   ),
 
                   const SizedBox(
-                    height: 10,
+                    height: 40,
                   ),
                   Container(
                     alignment: Alignment.center,
                     child: const Text(
                       'By Signing in or Sign up you agree to our Terms of Services \n and private policies',
                       style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
                   )
                 ],

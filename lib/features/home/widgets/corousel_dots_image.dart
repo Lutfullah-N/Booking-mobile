@@ -28,13 +28,16 @@ class _ImageCarouselWithDotsState extends State<ImageCarouselWithDots> {
           items: imgList
               .map((item) => Center(
                     child: Container(
+                      height: 300,
+                      width: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.blueAccent, width: 3),
+                        border:
+                            Border.all(color: Colors.blueAccent, width: 0.5),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
-                            blurRadius: 8,
+                            blurRadius: 20,
                             offset: Offset(2, 4),
                           ),
                         ],
