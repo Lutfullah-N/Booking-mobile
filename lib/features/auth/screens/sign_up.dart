@@ -45,8 +45,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
+  late final TextEditingController _ruleController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
+  late final TextEditingController _imageController;
   // late String _email, _password, _confirmPassword
   // ignore: unused_field
   bool _isLoading = false;
@@ -55,8 +57,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
   void initState() {
     _emailController = TextEditingController();
     _userNameController = TextEditingController();
+    _ruleController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
+    _imageController = TextEditingController();
     super.initState();
   }
 
@@ -64,8 +68,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
   void dispose() {
     _userNameController.dispose();
     _emailController.dispose();
+    _ruleController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _imageController.dispose();
     super.dispose();
   }
 
@@ -86,8 +92,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'email': user.email,
       'username': _userNameController.text.trim(),
+      'rule': _ruleController.text.trim(),
       'CreatedAt': FieldValue.serverTimestamp(),
-      'displayName': user.email,
       'avatorURL': '',
     });
   }
@@ -99,11 +105,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
     setState(() => _isLoading = true);
     try {
       // ignore: non_constant_identifier_names
-      final UserCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
+      final UserCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
       User? user = UserCredential.user;
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
@@ -177,28 +183,47 @@ class _RegistrationFormState extends State<RegistrationForm> {
               Text(
                 'Create Account',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
-              SizedBox(height: 30),
+              SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                decoration: _inputDecoration('user Name', Icons.person),
+              ),
+              SizedBox(height: 20),
               TextFormField(decoration: _inputDecoration('Email', Icons.email)),
               SizedBox(height: 20),
               TextFormField(
+                decoration: _inputDecoration('rule', Icons.rule),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
                 obscureText: true,
-                decoration: _inputDecoration('Password', Icons.password),
+                decoration: _inputDecoration('Password', Icons.lock),
               ),
               SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
                 decoration: _inputDecoration(
                   'Confirm Password',
-                  Icons.password_outlined,
+                  Icons.lock,
                 ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  TextButton(onPressed: () {}, child: Text('Upload Profile')),
+                  TextButton(onPressed: () {}, child: Text('Add PSkey'))
+                ],
               ),
               SizedBox(height: 30),
               SizedBox(
                 width: 160,
-                child: IconButton(
+                child: TextButton(
                   onPressed: () async {
                     _register();
                     // ProgressOverlay.show(context, message: 'Signing up...');
@@ -215,11 +240,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     //   "If you have already had an account you can navigate to log in from options button!",
                     // );
                   },
-                  icon: Icon(Icons.app_registration),
+                  child: Text('Register'),
                 ),
               ),
               SizedBox(height: 20),
-              // const SplitButtonWidget(),
+              TextButton(onPressed: () {}, child: Text('Sign in'))
             ],
           ),
         ),
