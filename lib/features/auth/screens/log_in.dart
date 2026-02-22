@@ -66,7 +66,7 @@ class _LoginState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('/assets/images/logo.png', width: 100, height: 100),
+                Image.asset('assets/images/logo.png', width: 100, height: 100),
                 SizedBox(height: 30),
                 Text(
                   'Welcome Back!',

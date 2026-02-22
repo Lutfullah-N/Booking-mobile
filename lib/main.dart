@@ -62,7 +62,9 @@ class MyApp extends StatelessWidget {
       title: 'Booking mobile',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.from(
+                alpha: 1, red: 0.404, green: 0.227, blue: 0.718)),
       ),
       home: const WelcomeScreen(),
       routes: {
