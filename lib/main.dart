@@ -1,13 +1,10 @@
 import 'package:booking/features/auth/controller/email_verification.dart';
 import 'package:booking/features/auth/screens/log_in.dart';
-import 'package:booking/features/auth/screens/phone_sign_up.dart';
-import 'package:booking/features/auth/screens/sign_up.dart';
-import 'package:booking/features/home/screens/booking_page.dart';
 import 'package:booking/features/home/screens/home_page.dart';
 import 'package:booking/firebase_options.dart';
+import 'package:booking/routes/app_routes.dart';
 // import 'package:booking/features/home/screens/notificaion_screen.dart';
 // import 'package:booking/firebase_options.dart';
-import 'package:booking/shared/widgets/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
@@ -59,23 +56,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Booking mobile',
       debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.welcomePage,
+      onGenerateRoute: AppRoutes.generateRoute,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.from(
                 alpha: 1, red: 0.404, green: 0.227, blue: 0.718)),
       ),
-      home: const WelcomeScreen(),
-      routes: {
-        '/welcome': (context) => const WelcomeScreen(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/verify': (context) => const EmailVerification(),
-        '/homepage': (context) => const HomePage(),
-        '/bookinglist': (context) => const BookingListPage(),
-        'phoneSignUp': (context) => const PhoneSignUp()
-      },
     );
   }
 }

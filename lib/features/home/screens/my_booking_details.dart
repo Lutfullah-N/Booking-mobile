@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyBookingDetails extends StatefulWidget {
+  const MyBookingDetails({super.key});
+
   @override
   State<StatefulWidget> createState() => _MyBookingDetails();
 }

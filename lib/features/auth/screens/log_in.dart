@@ -77,7 +77,10 @@ class _LoginState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 30),
-                TextField(
+                TextFormField(
+                  controller: _emailController,
+                  validator: (value) =>
+                      value!.isEmpty ? "Enter your Email Address" : null,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     prefixIcon: Icon(Icons.email, color: Colors.white70),
@@ -93,8 +96,10 @@ class _LoginState extends State<LoginPage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(height: 30),
-
-                TextField(
+                TextFormField(
+                  controller: _passwordController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter your correct password!' : null,
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Password',
@@ -113,23 +118,19 @@ class _LoginState extends State<LoginPage> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    // ProgressOverlay.show(context, message: 'Signing in...');
-                    await Future.delayed(const Duration(seconds: 2));
-                    // ignore: use_build_context_synchronously
-                    // ProgressOverlay.hide(context);
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Login Successfully!")),
-                    );
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: 'email', password: 'password');
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Login Successfully!')),
+                      );
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    } catch (e) {
+                      Text('error');
+                    }
                     _login();
-                    if (!mounted) return;
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushReplacementNamed('/homepage');
-                    // showSnackBar(
-                    //   // ignore: use_build_context_synchronously
-                    //   context,
-                    //   "Create account if don't have one from options button!",
-                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -139,10 +140,27 @@ class _LoginState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  child: Icon(Icons.key_outlined),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.key_outlined),
+                      SizedBox(width: 8),
+                      Text("Login"),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 20),
-                // const SplitButtonWidget(),
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signOptUp');
+                      },
+                      child: const Text('Sign up Options'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
