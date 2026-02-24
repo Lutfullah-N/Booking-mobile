@@ -1,4 +1,5 @@
 import 'package:booking/features/home/widgets/card_loader.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,142 +10,146 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _notificationCount = 0;
-
+  final int _notificationCount = 1;
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // ✅ Drawer belongs here
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Icon(Icons.account_circle, size: 80, color: Colors.white),
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              onTap: () {
-                // Example logout action
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Logged out')));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.help),
-              title: const Text('Help & Support'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    if (!mounted) return;
+    Navigator.of(context).pushReplacementNamed('/login');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Logged out Successfully')),
+    );
+  }
 
-      appBar: AppBar(
-        title: const Text('Welcome Back'),
-        actions: [
-          SizedBox(
-            width: 5,
-          ),
-          Badge(
-            label: Text(_notificationCount.toString()),
-            backgroundColor: const Color.fromARGB(255, 54, 63, 244),
-            textColor: Colors.white,
-            offset: const Offset(-1, 4),
-            child: IconButton(
-              onPressed: () {
-                // NotificationService.showNotification(
-                //   title: 'New Notification',
-                //   body: 'You have 0 new notifications.',
-                // );
-              },
-              icon: const Icon(Icons.notifications),
+  Widget _buildDrawer() {
+    return Drawer(
+      // ✅ Drawer belongs here
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: const Text('Nihan'),
+            accountEmail: const Text('nihantagon@gmail.com'),
+            currentAccountPicture: const CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                size: 40,
+                color: Colors.blue,
+              ),
             ),
+            decoration: const BoxDecoration(color: Colors.blueAccent),
           ),
-          const SizedBox(height: 3),
-          // Row(
-          //   children: [
-          //     TextFormField(
-          //       // controller: _searchController,
-          //       decoration: InputDecoration(
-          //         hintText: 'Search...',
-          //         prefixIcon: const Icon(Icons.search),
-          //         // suffixIcon: _searchController.text.isNotEmpty
-          //         //     ? IconButton(
-          //         //         icon: const Icon(Icons.clear),
-          //         //         onPressed: () {
-          //         //           _searchController.clear();
-          //         //           // Handle clear
-          //         //         },
-          //         //       )
-          //         //     : null,
-          //         border: OutlineInputBorder(
-          //           borderRadius: BorderRadius.circular(25.0),
-          //         ),
-          //       ),
-          //       onChanged: (value) {
-          //         // Handle search
-          //       },
-          //     )
-          //   ],
-          // )
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed('/userprofile');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () {
+              // Example logout action
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Logged out')));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.help),
+            title: const Text('Help & Support'),
+            onTap: () {},
+          ),
         ],
       ),
+    );
+  }
 
-      body: const SingleChildScrollView(
-        child: Padding(
+  Widget _buildBody() {
+    switch (_selectedIndex) {
+      case 0:
+        return const SingleChildScrollView(
             padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 JsonCardExample(),
-                SizedBox(
-                  height: 20,
-                ),
-                // // comming Son Bookings
-                // JsonCardExample(),
-                // // addvertisments and services
-                // JsonCardExample(),
+                SizedBox(height: 20),
+                JsonCardExample(),
               ],
-            )),
-      ),
+            ));
+      case 1:
+        return const Center(
+          child: Text('Search page'),
+        );
+      case 2:
+        return const Center(child: Text('Booking Page'));
+      case 3:
+        return const Center(
+          child: Text('Profile Page'),
+        );
+      default:
+        return const Center(
+          child: Text('Page not found'),
+        );
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: _buildDrawer(),
+      appBar: AppBar(title: const Text('Welcome Back'), actions: [
+        Badge(
+          label: Text(_notificationCount.toString()),
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
+          offset: Offset(-1, 4),
+          child: IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'you Have $_notificationCount new notifications.',
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.notifications),
+          ),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/search');
+            },
+            icon: Icon(Icons.search))
+      ]),
+      body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Badge(child: Icon(Icons.home)),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.book_outlined), label: 'Bookings'),
-          BottomNavigationBarItem(
-            icon: Badge(label: Text('1'), child: Icon(Icons.person)),
-            label: 'You',
-          ),
-        ],
-      ),
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.book_outlined), label: 'Bookings'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'You'),
+          ]),
     );
   }
 }

@@ -54,6 +54,7 @@ class OptBasic extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.w200,
                             fontSize: 18,
+                            // ignore: deprecated_member_use
                             backgroundColor: Colors.white.withOpacity(0.5),
                             color: Colors.black),
                       ),

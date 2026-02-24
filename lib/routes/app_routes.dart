@@ -7,6 +7,7 @@ import 'package:booking/features/home/screens/add_booking.dart';
 import 'package:booking/features/home/screens/advance_otp.dart';
 import 'package:booking/features/home/screens/coming_soon.dart';
 import 'package:booking/features/home/screens/current_booking.dart';
+import 'package:booking/features/home/screens/home_page.dart';
 import 'package:booking/features/home/screens/my_booking.dart';
 import 'package:booking/features/home/screens/my_booking_details.dart';
 import 'package:booking/features/home/screens/payment_method.dart';
@@ -69,6 +70,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const PhoneUsername());
       case addBooking:
         return MaterialPageRoute(builder: (_) => const AddBooking());
+      case homePage:
+        return MaterialPageRoute(builder: (_) => HomePage());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
