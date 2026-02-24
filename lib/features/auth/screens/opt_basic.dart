@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PhoneUsername extends StatelessWidget {
-  const PhoneUsername({super.key});
+class OptBasic extends StatelessWidget {
+  const OptBasic({super.key});
 
   @override
   Widget build(BuildContext context) {
