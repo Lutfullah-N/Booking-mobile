@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // ignore: unused_import
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -10,11 +14,28 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 500,
-          padding: EdgeInsets.all(24.0),
-          child: SingleChildScrollView(child: RegistrationForm()),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RegistrationForm(),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/phoneSignUp');
+                    },
+                    child: Text('Sign up Options')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/login');
+                    },
+                    child: Text('Sign in')),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -30,6 +51,16 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
+  // ignore: unused_field
+  File? _profileImage;
+  final ImagePicker _picker = ImagePicker();
+  Future<String> uploadProfileImage(File imageFile, String userId) async {
+    final ref =
+        FirebaseStorage.instance.ref().child("profile_images/$userId.jpg");
+    await ref.putFile(imageFile);
+    return await ref.getDownloadURL();
+  }
+
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
@@ -105,12 +136,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
     setState(() => _isLoading = true);
     try {
       // ignore: non_constant_identifier_names
-      final UserCredential =
+      final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      User? user = UserCredential.user;
+      User? user = userCredential.user;
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
         if (!mounted) return;
@@ -190,22 +221,42 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 height: 30,
               ),
               TextFormField(
-                decoration: _inputDecoration('user Name', Icons.person),
+                controller: _userNameController,
+                validator: (value) =>
+                    value!.isEmpty ? 'Enter your Showing Name' : null,
+                decoration: _inputDecoration('userName', Icons.person),
               ),
               SizedBox(height: 20),
-              TextFormField(decoration: _inputDecoration('Email', Icons.email)),
+              TextFormField(
+                  controller: _emailController,
+                  validator: (value) =>
+                      value!.isEmpty ? 'Enter your Valide Email Address' : null,
+                  decoration: _inputDecoration('Email', Icons.email)),
               SizedBox(height: 20),
               TextFormField(
-                decoration: _inputDecoration('rule', Icons.rule),
+                controller: _ruleController,
+                validator: (value) => value!.isEmpty
+                    ? "Enter your Rule basd on your Activity"
+                    : null,
+                decoration: _inputDecoration('rule(user/provider)', Icons.rule),
               ),
               SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
+                controller: _passwordController,
+                validator: (value) =>
+                    value!.isEmpty ? "Password must not be empty" : null,
                 decoration: _inputDecoration('Password', Icons.lock),
               ),
               SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
                 decoration: _inputDecoration(
                   'Confirm Password',
                   Icons.lock,
@@ -216,7 +267,17 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
               Row(
                 children: [
-                  TextButton(onPressed: () {}, child: Text('Upload Profile')),
+                  TextButton(
+                      onPressed: () async {
+                        final XFile? image = await _picker.pickImage(
+                            source: ImageSource.gallery);
+                        if (image != null) {
+                          setState(() {
+                            _profileImage = File(image.path);
+                          });
+                        }
+                      },
+                      child: Text('Upload Profile')),
                   TextButton(onPressed: () {}, child: Text('Add PSkey'))
                 ],
               ),
@@ -243,8 +304,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   child: Text('Register'),
                 ),
               ),
-              SizedBox(height: 20),
-              TextButton(onPressed: () {}, child: Text('Sign in'))
             ],
           ),
         ),

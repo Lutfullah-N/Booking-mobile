@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         '/verify': (context) => const EmailVerification(),
         '/homepage': (context) => const HomePage(),
         '/bookinglist': (context) => const BookingListPage(),
-        'phonesignin': (context) => const PhoneSignUp()
+        'phoneSignUp': (context) => const PhoneSignUp()
       },
     );
   }

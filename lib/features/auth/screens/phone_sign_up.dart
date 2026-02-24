@@ -6,98 +6,78 @@ class PhoneSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(0, 6, 0, 0),
+      backgroundColor: const Color.fromARGB(255, 6, 0, 0),
       appBar: AppBar(
         title: Text('Sign Up By Phone Number'),
       ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(32),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
                 decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'Phone num (+9300000000)',
-                    prefixIcon: Icon(Icons.phone),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide.none)),
-                keyboardType: TextInputType.number,
-                // inputFormatters: <TextInputFormatter>[
-                //   FilteringTextInputFormatter.singleLineFormatter
-                //       .allow(RegExp(r'^\d*\.?\d*$')),
-                // ],
-                style:
-                    TextStyle(color: const Color.fromARGB(255, 150, 132, 132)),
+                  filled: true,
+                  hintText: 'Phone num (+9300000000)',
+                  prefixIcon: const Icon(Icons.phone),
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                keyboardType: TextInputType.phone,
               ),
-              Expanded(
-                  child: Divider(
-                color: Colors.grey,
-                thickness: 2,
-              )),
-              const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.all(2),
-                padding: const EdgeInsets.all(5),
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
-                alignment: Alignment.center,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(25)),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context);
-                    },
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-              ),
-              const SizedBox(height: 140),
-              Row(
-                children: [
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
+                  onPressed: () {},
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              Row(
+                children: const [
+                  Expanded(child: Divider()),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Or Continue With',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text('Or Continue With'),
                   ),
-                  Expanded(
-                      child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ))
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(child: Icon(Icons.facebook)),
-                  Expanded(child: Text('FaceBook'))
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(child: Image.asset('assets/images/google.png')),
-                  Expanded(child: Text('Google'))
+                  Expanded(child: Divider()),
                 ],
               ),
               const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.facebook),
+                  SizedBox(width: 10),
+                  Text('Facebook'),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.g_mobiledata, size: 30),
+                  SizedBox(width: 10),
+                  Text('Google'),
+                ],
+              ),
+              const SizedBox(height: 30),
               const Text(
-                  'By Signing in or Sign up you agree to our term of Services \n and Privacy Policies!')
+                'By Signing in or Sign up you agree to our Terms of Services and Privacy Policies!',
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
