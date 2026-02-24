@@ -11,7 +11,6 @@ class BookingForm extends StatefulWidget {
 
 class _BookingForm extends State<BookingForm> {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     Title(color: Colors.white, child: Text('hi'));

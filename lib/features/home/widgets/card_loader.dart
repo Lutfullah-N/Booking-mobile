@@ -45,7 +45,7 @@ class _JsonCardExampleState extends State<JsonCardExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Reach Future")),
+      appBar: AppBar(title: Text("Available Bookingz")),
       body: Center(
         child: user == null
             ? CircularProgressIndicator()

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:booking/features/home/widgets/corousel_dots_image.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreen();
+}
 
+class _WelcomeScreen extends State<WelcomeScreen> {
+  String selectedLanguage = 'English';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +81,7 @@ class WelcomeScreen extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   showModalBottomSheet(
-                      context: context,
+                      context: Navigator.of(context).context,
                       shape: const RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(20)),
@@ -99,7 +104,7 @@ class WelcomeScreen extends StatelessWidget {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(height: 10),
-                                  RadioListTile(
+                                  RadioListTile<String>(
                                     value: "English",
                                     title: const Text('English'),
                                     // ignore: deprecated_member_use
@@ -134,7 +139,7 @@ class WelcomeScreen extends StatelessWidget {
                                                   const SizedBox(
                                                     height: 20,
                                                   ),
-                                                  RadioListTile(
+                                                  RadioListTile<String>(
                                                     value: 'Spanish',
                                                     title:
                                                         const Text('Spanish'),
@@ -149,7 +154,7 @@ class WelcomeScreen extends StatelessWidget {
                                                       });
                                                     },
                                                   ),
-                                                  RadioListTile(
+                                                  RadioListTile<String>(
                                                     value: 'Dari',
                                                     title: const Text('Dari'),
                                                     // ignore: deprecated_member_use
@@ -163,7 +168,7 @@ class WelcomeScreen extends StatelessWidget {
                                                       });
                                                     },
                                                   ),
-                                                  RadioListTile(
+                                                  RadioListTile<String>(
                                                     value: 'Pashto',
                                                     title: const Text('Pashto'),
                                                     // ignore: deprecated_member_use
@@ -177,7 +182,7 @@ class WelcomeScreen extends StatelessWidget {
                                                       });
                                                     },
                                                   ),
-                                                  RadioListTile(
+                                                  RadioListTile<String>(
                                                     value: 'Dutch',
                                                     title: const Text('Dutch'),
                                                     // ignore: deprecated_member_use
@@ -263,11 +268,16 @@ class WelcomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(2),
                         width: 100,
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black),
                             onPressed: () {
                               Navigator.of(context)
                                   .pushReplacementNamed('/login');
                             },
-                            child: const Text('Sign In')),
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.white),
+                            )),
                       ),
                       const SizedBox(
                         width: 50,
@@ -280,9 +290,10 @@ class WelcomeScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(25)),
                           child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black),
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed('/phonesignin');
+                                Navigator.pushNamed(context, '/register');
                               },
                               child: const Text(
                                 'Sign up',

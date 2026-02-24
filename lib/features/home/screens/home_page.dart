@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _notificationCount = 2;
+  final int _notificationCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +53,14 @@ class _HomePageState extends State<HomePage> {
       ),
 
       appBar: AppBar(
-        title: const Text("Home"),
+        title: const Text('Welcome Back'),
         actions: [
+          SizedBox(
+            width: 5,
+          ),
           Badge(
             label: Text(_notificationCount.toString()),
-            backgroundColor: Colors.red,
+            backgroundColor: const Color.fromARGB(255, 54, 63, 244),
             textColor: Colors.white,
             offset: const Offset(-1, 4),
             child: IconButton(
@@ -70,22 +73,49 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.notifications),
             ),
           ),
-          const SizedBox(width: 12),
-          Badge(
-            label: const Text('New'),
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            offset: const Offset(0, 3),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-          ),
-          const SizedBox(width: 16),
+          const SizedBox(height: 3),
+          // Row(
+          //   children: [
+          //     TextFormField(
+          //       // controller: _searchController,
+          //       decoration: InputDecoration(
+          //         hintText: 'Search...',
+          //         prefixIcon: const Icon(Icons.search),
+          //         // suffixIcon: _searchController.text.isNotEmpty
+          //         //     ? IconButton(
+          //         //         icon: const Icon(Icons.clear),
+          //         //         onPressed: () {
+          //         //           _searchController.clear();
+          //         //           // Handle clear
+          //         //         },
+          //         //       )
+          //         //     : null,
+          //         border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(25.0),
+          //         ),
+          //       ),
+          //       onChanged: (value) {
+          //         // Handle search
+          //       },
+          //     )
+          //   ],
+          // )
         ],
       ),
 
-      body: const Center(child: JsonCardExample()),
+      body: const SingleChildScrollView(
+          child: Row(
+        children: [
+          JsonCardExample(),
+          SizedBox(
+            height: 20,
+          ),
+          // // comming Son Bookings
+          // JsonCardExample(),
+          // // addvertisments and services
+          // JsonCardExample(),
+        ],
+      )),
 
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -94,6 +124,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.book_outlined), label: 'Bookings'),
           BottomNavigationBarItem(
             icon: Badge(label: Text('1'), child: Icon(Icons.person)),
             label: 'You',
