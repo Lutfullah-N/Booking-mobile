@@ -3,6 +3,8 @@ import 'package:booking/features/home/widgets/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddBooking extends StatelessWidget {
+  const AddBooking({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -11,6 +11,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final int _notificationCount = 0;
 
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,20 +111,26 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: const SingleChildScrollView(
-          child: Row(
-        children: [
-          JsonCardExample(),
-          SizedBox(
-            height: 20,
-          ),
-          // // comming Son Bookings
-          // JsonCardExample(),
-          // // addvertisments and services
-          // JsonCardExample(),
-        ],
-      )),
+        child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                JsonCardExample(),
+                SizedBox(
+                  height: 20,
+                ),
+                // // comming Son Bookings
+                // JsonCardExample(),
+                // // addvertisments and services
+                // JsonCardExample(),
+              ],
+            )),
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(
             icon: Badge(child: Icon(Icons.home)),
