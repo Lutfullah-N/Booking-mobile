@@ -17,7 +17,7 @@ class _ImageCarouselWithDotsState extends State<ImageCarouselWithDots> {
     'assets/images/ara.png',
     'assets/images/hotel.png',
     'assets/images/flight.png',
-    'assets/images/taxi.png',
+    'assets/images/weolcome.png',
   ];
 
   @override
