@@ -89,7 +89,7 @@ class AuthGate extends StatelessWidget {
         if (!user.emailVerified) {
           return const EmailVerification();
         }
-        return const HomePage();
+        return HomePage();
       },
     );
   }
