@@ -118,19 +118,20 @@ class _LoginState extends State<LoginPage> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    try {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: 'email', password: 'password');
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Login Successfully!')),
-                      );
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    } catch (e) {
-                      Text('error');
-                    }
-                    _login();
+                    Navigator.of(context).pushReplacementNamed('/home');
+                    // try {
+                    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    //       email: 'email', password: 'password');
+                    //   // ignore: use_build_context_synchronously
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     const SnackBar(content: Text('Login Successfully!')),
+                    //   );
+                    //   // ignore: use_build_context_synchronously
+                    //   Navigator.of(context).pushReplacementNamed('/home');
+                    // } catch (e) {
+                    //   Text('error');
+                    // }
+                    // _login();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

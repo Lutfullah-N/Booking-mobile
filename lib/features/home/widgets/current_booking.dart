@@ -10,6 +10,7 @@ class CurrentBooking extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      // ignore: sized_box_for_whitespace
       child: Container(
         width: 160,
         child: Column(

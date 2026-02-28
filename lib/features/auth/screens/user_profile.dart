@@ -1,67 +1,99 @@
+import 'package:booking/shared/widgets/main_nav_button.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
   @override
-  State<UserProfile> createState() => _UserProfile();
+  State<UserProfile> createState() => _UserProfileState();
 }
 
-class _UserProfile extends State<UserProfile> {
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32.0),
+        appBar: AppBar(title: const Text("Profile")),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset('assets/images/logo.png'),
-              IconButton(onPressed: () {}, icon: Icon(Icons.edit_square)),
-              SizedBox(height: 30),
-              Text('Ali R'),
+            children: [
+              const SizedBox(height: 20),
+
+              // Profile Image
+              Image.asset('assets/images/logo.png', height: 100),
+
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.edit_square),
+              ),
+
+              const SizedBox(height: 10),
+
+              const Text(
+                'Ali R',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Phone
               Row(
-                children: [
-                  Expanded(child: Icon(Icons.phone)),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.phone),
+                  SizedBox(width: 10),
                   Text('+935635636'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(child: Icon(Icons.email)),
-                  Text('alir@exmapl.com')
                 ],
               ),
-              SizedBox(height: 30),
-              Expanded(
-                  child: Divider(
-                thickness: 1,
-              )),
+
+              const SizedBox(height: 10),
+
+              // Email
               Row(
-                children: [
-                  Expanded(child: Icon(Icons.book_outlined)),
-                  TextButton(onPressed: () {}, child: Text('My Booking')),
-                  Expanded(child: Icon(Icons.arrow_right)),
-                  SizedBox(height: 10),
-                  Expanded(child: Icon(Icons.translate)),
-                  TextButton(onPressed: () {}, child: Text('Change Language')),
-                  Expanded(child: Icon(Icons.arrow_right)),
-                  SizedBox(height: 10),
-                  Expanded(child: Icon(Icons.lock)),
-                  TextButton(onPressed: () {}, child: Text('Change Password')),
-                  Expanded(child: Icon(Icons.arrow_right)),
-                  SizedBox(height: 10),
-                  Expanded(child: Icon(Icons.touch_app)),
-                  TextButton(onPressed: () {}, child: Text('Face/Touch Id')),
-                  // Expanded(child: ToggleButtons(children: , isSelected: ()P)),
-                  SizedBox(height: 10),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.email),
+                  SizedBox(width: 10),
+                  Text('alir@example.com'),
                 ],
               ),
-              // const BottomNavBar();
+
+              const SizedBox(height: 30),
+              const Divider(),
+
+              // Settings Options
+              ListTile(
+                leading: const Icon(Icons.book_outlined),
+                title: const Text('My Booking'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.pushNamed(context, '/myBooking');
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.translate),
+                title: const Text('Change Language'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {},
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.lock),
+                title: const Text('Change Password'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {},
+              ),
+
+              SwitchListTile(
+                secondary: const Icon(Icons.touch_app),
+                title: const Text('Face/Touch ID'),
+                value: true,
+                onChanged: (value) {},
+              ),
             ],
           ),
         ),
-      ),
-    );
+        bottomNavigationBar: const CustomBottomNav(currentIndex: 2));
   }
 }

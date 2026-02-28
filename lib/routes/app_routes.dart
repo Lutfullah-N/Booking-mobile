@@ -5,6 +5,7 @@ import 'package:booking/features/auth/screens/sign_up.dart';
 import 'package:booking/features/auth/screens/user_profile.dart';
 import 'package:booking/features/home/screens/add_booking.dart';
 import 'package:booking/features/home/screens/advance_otp.dart';
+import 'package:booking/features/home/screens/booking_page.dart';
 import 'package:booking/features/home/screens/home_page.dart';
 import 'package:booking/features/home/screens/my_booking.dart';
 import 'package:booking/features/home/screens/my_booking_details.dart';
@@ -15,15 +16,16 @@ import 'package:flutter/material.dart';
 
 class AppRoutes {
   static const String welcomePage = '/';
-  static const String bookingSoon = '/bookingSoon';
+  // static const String bookingSoon = '/bookingSoon';
   static const String homePage = '/home';
   static const String signOpt = '/signOptUp';
   static const String emailSingUp = '/emailSingUp';
   static const String phoneSingUp = '/phoneSingUp';
-  static const String currentBooking = '/currentBooking';
+  // static const String currentBooking = '/currentBooking';
   static const String userProfile = '/userprofile';
   static const String myBooking = '/myBooking';
   static const String payment = '/payment';
+  static const String bookings = '/bookings';
   static const String myBookingDetail = '/myDetails';
   static const String confirmOtp = '/confirmOtp';
   static const String bookingDetails = '/bookingDetails';
@@ -50,8 +52,6 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const PhoneSignUp());
       case emailSingUp:
         return MaterialPageRoute(builder: (_) => const RegistrationForm());
-      case currentBooking:
-      // return MaterialPageRoute(builder: (_) => const BookingListPage());
       case userProfile:
         return MaterialPageRoute(builder: (_) => const UserProfile());
       case myBooking:
@@ -66,6 +66,9 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const OptBasic());
       case phoneUsername:
         return MaterialPageRoute(builder: (_) => const PhoneUsername());
+      case bookings:
+        return MaterialPageRoute(
+            builder: (_) => const BookingPage(isComingSoon: true));
       case addBooking:
         return MaterialPageRoute(builder: (_) => const AddBooking());
       case homePage:

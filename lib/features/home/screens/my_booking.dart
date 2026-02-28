@@ -1,3 +1,4 @@
+import 'package:booking/shared/widgets/main_nav_button.dart';
 import 'package:flutter/material.dart';
 
 class Booking {
@@ -41,63 +42,63 @@ class MyBooking extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Booking'),
-        centerTitle: true,
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: bookings.length,
-        itemBuilder: (context, index) {
-          final booking = bookings[index];
-          return Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            margin: const EdgeInsets.only(bottom: 16),
-            child: ListTile(
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  booking.image,
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.cover,
-                ),
+        appBar: AppBar(
+          title: const Text('My Booking'),
+          centerTitle: true,
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: bookings.length,
+          itemBuilder: (context, index) {
+            final booking = bookings[index];
+            return Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
               ),
-              title: Text(
-                booking.title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.watch_later, size: 16),
-                      const SizedBox(width: 5),
-                      Text(booking.time),
-                    ],
+              margin: const EdgeInsets.only(bottom: 16),
+              child: ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    booking.image,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 6),
-                  Chip(
-                    label: Text(booking.status),
-                    backgroundColor: _statusColor(booking.status).shade100,
-                    labelStyle: TextStyle(
-                      color: _statusColor(booking.status),
+                ),
+                title: Text(
+                  booking.title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.watch_later, size: 16),
+                        const SizedBox(width: 5),
+                        Text(booking.time),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 6),
+                    Chip(
+                      label: Text(booking.status),
+                      backgroundColor: _statusColor(booking.status).shade100,
+                      labelStyle: TextStyle(
+                        color: _statusColor(booking.status),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+        bottomNavigationBar: const CustomBottomNav(currentIndex: 2));
   }
 
   /// Helper method to map status to color

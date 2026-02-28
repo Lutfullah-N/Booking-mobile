@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:booking/features/home/models/property.dart';
 import 'package:booking/features/home/widgets/current_booking.dart';
+import 'package:booking/shared/extras/custom_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -32,84 +33,73 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: "Search",
-            border: InputBorder.none,
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: TextField(
+            decoration: InputDecoration(
+              hintText: "Search",
+              border: InputBorder.none,
+            ),
           ),
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              child: Text('user name'),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('User Profile'),
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed('/userprofile');
-              },
-            )
-          ],
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Text('user name'),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('User Profile'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/userprofile');
+                },
+              )
+            ],
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text("Welcome back 🍏",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
-            sectionTitle("Now Playing"),
-            properties.isEmpty
-                ? Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: properties
-                          .map((property) => CurrentBooking(property: property))
-                          .toList(),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text("Welcome back 🍏",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+              sectionTitle("Now Playing"),
+              properties.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: properties
+                            .map((property) =>
+                                CurrentBooking(property: property))
+                            .toList(),
+                      ),
                     ),
-                  ),
-            sectionTitle('Coming Soon'),
-            properties.isEmpty
-                ? Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: properties
-                          .map((property) => CurrentBooking(property: property))
-                          .toList(),
+              sectionTitle('Coming Soon'),
+              properties.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: properties
+                            .map((property) =>
+                                CurrentBooking(property: property))
+                            .toList(),
+                      ),
                     ),
-                  ),
-            sectionTitle("Promo & Discount"),
-            promoBanner(),
-            sectionTitle("Service"),
-            serviceIcons(),
-          ],
+              sectionTitle("Promo & Discount"),
+              promoBanner(),
+              sectionTitle("Service"),
+              serviceIcons(),
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.green,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.red), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search, color: Colors.blue), label: "Search"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.book_outlined, color: Colors.blue),
-              label: "Ticket"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.blue), label: "Profile"),
-        ],
-      ),
-    );
+        bottomNavigationBar: CustomBottomNav(currentIndex: 0));
   }
 
   Widget sectionTitle(String title) {
