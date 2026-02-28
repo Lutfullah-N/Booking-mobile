@@ -13,7 +13,7 @@ class CustomBottomNav extends StatelessWidget {
           Navigator.pushReplacementNamed(context, '/home');
         }
         if (index == 1) {
-          Navigator.pushReplacementNamed(context, '/search');
+          Navigator.pushReplacementNamed(context, '/bookings');
         }
         if (index == 2) Navigator.pushReplacementNamed(context, '/myBooking');
         // if (index == 3) Navigator.pushReplacementNamed(context, '/myBooking');
@@ -25,12 +25,12 @@ class CustomBottomNav extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
+          icon: Icon(Icons.book_outlined),
+          label: 'Bookings',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Profile',
+          label: 'You',
         ),
       ],
     );

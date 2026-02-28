@@ -12,110 +12,64 @@ class _BookingDetailsPage extends State<BookingDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: const EdgeInsets.all(1),
-              padding: const EdgeInsets.all(2),
-              child: Image.asset('assets/images/hotel.png'),
+            Image.asset('assets/images/hotel.png'),
+            const SizedBox(
+              height: 12,
             ),
             Container(
-              margin: const EdgeInsets.all(2),
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.black,
                 borderRadius: BorderRadius.circular(20),
               ),
-              color: Colors.black,
-              child: Card(
-                child: Row(
-                  children: [
-                    const Text(
-                      'Title: booking Title',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+              child: Text(
+                'Title: booking Title',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  // color: Colors.white,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
+            const SizedBox(
+              height: 16,
             ),
-            Container(
-              margin: const EdgeInsets.all(2),
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                // borderRadius: BorderRadius.circular(20)
-              ),
-              child: Row(
-                children: [
-                  const Text('Booking Type'),
-                  Expanded(child: const Text('Flight')),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  const Text('Booking count'),
-                  Expanded(child: const Text('23+')),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  const Text('BookingPrice'),
-                  Expanded(child: const Text('20 \$/')),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text('Booking Type: flight'),
+                Text('Count: 12+'),
+                Text('Price: 20 \$'),
+              ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 20),
             const Text('About'),
-            SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 8),
             const Text(
-                'allow the user to scroll through the content. This is often used for long pages or when the keyboard appears and causes a bottom'),
-            SizedBox(
-              height: 10,
-            ),
+                'Allow the user to scroll through the content. this is often used for long pages...'),
+            const SizedBox(height: 20),
             const Text('Provider'),
             Container(
-              margin: const EdgeInsets.all(2),
-              padding: const EdgeInsets.all(2),
-              width: 300,
-              height: 100,
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
+                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
               child: Column(
                 children: [
                   Image.asset('assets/images/logo.png'),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  const Text('provider Name')
+                  const SizedBox(height: 8),
+                  const Text('Provider Name')
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            const Text('Location/Type'),
-            // Container(
-            //   child: Card(
-            //     child
-            //   ),
-            // )
-            SizedBox(
-              height: 15,
-            ),
-            TextButton(onPressed: () {}, child: Text('Continue')),
-            // BottomNavigationBar(items: BottomNavigationBarItem(icon: icon))
+            const SizedBox(height: 20),
+            const Text("Location/Type"),
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: () {}, child: const Text('Continue'))
           ],
         ),
       ),

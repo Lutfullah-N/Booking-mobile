@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:booking/shared/extras/custom_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:booking/features/home/models/property.dart';
@@ -27,12 +28,10 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   Future<void> loadJsonData() async {
-    final String response =
-        await rootBundle.loadString('assets/booking.json');
+    final String response = await rootBundle.loadString('assets/booking.json');
     final List<dynamic> data = json.decode(response);
 
-    final allProperties =
-        data.map((json) => Property.fromJson(json)).toList();
+    final allProperties = data.map((json) => Property.fromJson(json)).toList();
 
     setState(() {
       properties = allProperties
@@ -103,6 +102,7 @@ class _BookingPageState extends State<BookingPage> {
           ),
         ],
       ),
+      bottomNavigationBar: CustomBottomNav(currentIndex: 0),
     );
   }
 
@@ -113,8 +113,7 @@ class _BookingPageState extends State<BookingPage> {
   }) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            isActive ? Colors.greenAccent : Colors.grey[300],
+        backgroundColor: isActive ? Colors.greenAccent : Colors.grey[300],
         foregroundColor: isActive ? Colors.black : Colors.black54,
       ),
       onPressed: onTap,
