@@ -87,9 +87,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     leading: Image.asset(option["icon"]!, width: 40),
                     title: Text(option["name"]!),
                     trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      // TODO: handle payment selection
-                    },
+                    onTap: () {},
                   );
                 },
               ),

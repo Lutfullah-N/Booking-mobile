@@ -46,13 +46,50 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             children: [
               DrawerHeader(
-                child: Text('user name'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/logo.png'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text('User Name')
+                  ],
+                ),
               ),
               ListTile(
                 leading: Icon(Icons.person),
                 title: Text('User Profile'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/userprofile');
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.help),
+                title: Text('Help'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.room_service),
+                title: Text('Services'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+                onTap: () {},
+              ),
+              Text('this part must show just for providers'),
+              ListTile(
+                leading: Icon(Icons.add_sharp),
+                title: Text('Add Booking'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/addBooking');
                 },
               )
             ],
