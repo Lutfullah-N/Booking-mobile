@@ -69,7 +69,21 @@ class _BookingDetailsPage extends State<BookingDetailsPage> {
             const SizedBox(height: 20),
             const Text("Location/Type"),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: const Text('Continue'))
+            ElevatedButton(onPressed: () {}, child: const Text('Continue')),
+            const SizedBox(height: 20),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/payment');
+                    },
+                    child: Text(
+                      'Payment',
+                      style: TextStyle(fontSize: 16),
+                    ))
+              ],
+            )
           ],
         ),
       ),

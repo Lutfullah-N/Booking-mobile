@@ -1,3 +1,4 @@
+import 'package:booking/features/home/screens/my_booking_details.dart';
 import 'package:booking/shared/widgets/main_nav_button.dart';
 import 'package:flutter/material.dart';
 
@@ -57,42 +58,54 @@ class MyBooking extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               margin: const EdgeInsets.only(bottom: 16),
-              child: ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    booking.image,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                title: Text(
-                  booking.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.watch_later, size: 16),
-                        const SizedBox(width: 5),
-                        Text(booking.time),
-                      ],
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyBookingDetails(booking: booking)));
+                  // ignore: avoid_print
+                  print('Clicked: ${booking.title}');
+                },
+                child: ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      booking.image,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 6),
-                    Chip(
-                      label: Text(booking.status),
-                      backgroundColor: _statusColor(booking.status).shade100,
-                      labelStyle: TextStyle(
-                        color: _statusColor(booking.status),
+                  ),
+                  title: Text(
+                    booking.title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.watch_later, size: 16),
+                          const SizedBox(width: 5),
+                          Text(booking.time),
+                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 6),
+                      Chip(
+                        label: Text(booking.status),
+                        backgroundColor: _statusColor(booking.status).shade100,
+                        labelStyle: TextStyle(
+                          color: _statusColor(booking.status),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

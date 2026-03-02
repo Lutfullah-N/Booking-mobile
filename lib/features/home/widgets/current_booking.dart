@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CurrentBooking extends StatelessWidget {
   final Property property;
 
-  CurrentBooking({required this.property});
+  const CurrentBooking({super.key, required this.property});
   @override
   Widget build(BuildContext context) {
     return Card(
