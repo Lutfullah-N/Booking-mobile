@@ -8,7 +8,6 @@ import 'package:booking/features/home/screens/advance_otp.dart';
 import 'package:booking/features/home/screens/booking_page.dart';
 import 'package:booking/features/home/screens/home_page.dart';
 import 'package:booking/features/home/screens/my_booking.dart';
-import 'package:booking/features/home/screens/my_booking_details.dart';
 import 'package:booking/features/home/screens/payment_method.dart';
 import 'package:booking/features/home/screens/phone_username.dart';
 import 'package:booking/shared/widgets/welcome_page.dart';
@@ -41,11 +40,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const WelcomeScreen(),
         );
-
-      // case bookingSoon:
-      //   return MaterialPageRoute(
-      //     builder: (_) => const BookingSoon(),
-      //   );
       case login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case signOpt:
@@ -56,8 +50,6 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const UserProfile());
       case myBooking:
         return MaterialPageRoute(builder: (_) => MyBooking());
-      case myBookingDetail:
-        return MaterialPageRoute(builder: (_) => const MyBookingDetails());
       case payment:
         return MaterialPageRoute(builder: (_) => PaymentMethod());
       case confirmOtp:

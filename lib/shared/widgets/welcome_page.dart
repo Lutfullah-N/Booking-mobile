@@ -1,3 +1,4 @@
+import 'package:booking/features/home/widgets/language_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:booking/features/home/widgets/corousel_dots_image.dart';
 
@@ -139,63 +140,7 @@ class _WelcomeScreen extends State<WelcomeScreen> {
                                                   const SizedBox(
                                                     height: 20,
                                                   ),
-                                                  RadioListTile<String>(
-                                                    value: 'Spanish',
-                                                    title:
-                                                        const Text('Spanish'),
-                                                    // ignore: deprecated_member_use
-                                                    groupValue:
-                                                        selectedLanguage,
-                                                    // ignore: deprecated_member_use
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedLanguage =
-                                                            value!;
-                                                      });
-                                                    },
-                                                  ),
-                                                  RadioListTile<String>(
-                                                    value: 'Dari',
-                                                    title: const Text('Dari'),
-                                                    // ignore: deprecated_member_use
-                                                    groupValue:
-                                                        selectedLanguage,
-                                                    // ignore: deprecated_member_use
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedLanguage =
-                                                            value!;
-                                                      });
-                                                    },
-                                                  ),
-                                                  RadioListTile<String>(
-                                                    value: 'Pashto',
-                                                    title: const Text('Pashto'),
-                                                    // ignore: deprecated_member_use
-                                                    groupValue:
-                                                        selectedLanguage,
-                                                    // ignore: deprecated_member_use
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedLanguage =
-                                                            value!;
-                                                      });
-                                                    },
-                                                  ),
-                                                  RadioListTile<String>(
-                                                    value: 'Dutch',
-                                                    title: const Text('Dutch'),
-                                                    // ignore: deprecated_member_use
-                                                    groupValue:
-                                                        selectedLanguage,
-                                                    // ignore: deprecated_member_use
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedLanguage =
-                                                            value!;
-                                                      });
-                                                    },
-                                                  ),
+                                                  LanguageDropdown(),
                                                 ],
                                               ),
                                             );
