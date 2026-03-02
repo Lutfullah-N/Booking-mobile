@@ -1,155 +1,122 @@
+import 'package:booking/features/home/screens/my_booking.dart';
 import 'package:flutter/material.dart';
 
-class MyBookingDetails extends StatefulWidget {
-  const MyBookingDetails({super.key});
+class MyBookingDetails extends StatelessWidget {
+  final Booking booking;
+  const MyBookingDetails({super.key, required this.booking});
 
-  @override
-  State<StatefulWidget> createState() => _MyBookingDetails();
-}
-
-class _MyBookingDetails extends State<MyBookingDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Booking Details'),
+      ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Image.asset('assets/images/logo.png'),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text('Booking Topic :'),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text('Topic Details'),
-                      SizedBox(
-                        child: Column(
-                          children: [
-                            Icon(Icons.timer),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text('23 Hourse'),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text('34 minutes')
-                          ],
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 60,
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Booking Topic :${booking.title}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    Text('Details: ${booking.status}'),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.timer,
+                          size: 16,
                         ),
-                      )
-                    ],
-                  ),
+                        SizedBox(width: 4),
+                        Text("2h 34m")
+                      ],
+                    )
+                  ],
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Column(
+            Row(
               children: [
-                Icon(Icons.calendar_month_rounded),
-                SizedBox(
-                  width: 5,
+                Icon(
+                  Icons.calendar_month_rounded,
+                  size: 16,
                 ),
-                Expanded(
-                    child: Row(
-                  children: [
-                    Text('14h15'),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('02.23.2026')
-                  ],
-                )),
                 SizedBox(
-                  width: 10,
+                  width: 8,
                 ),
-                Icon(Icons.merge_type_outlined),
-                SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                    child: Row(
-                  children: [
-                    Text('Section 4'),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('flight No :21')
-                  ],
-                ))
+                Text('14h15, 10.12.2022'),
               ],
             ),
-            SizedBox(
-                child: Divider(
-              color: Colors.red,
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(Icons.merge_type_outlined),
+                SizedBox(
+                  width: 8,
+                ),
+                Text("Section 4 • Seats H7, H8"),
+              ],
+            ),
+            const Divider(
               thickness: 2,
-            )),
-            SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              color: Colors.red,
+            ),
+            const SizedBox(height: 20),
+            Row(
               children: [
                 Icon(
                   Icons.price_check,
                   color: Colors.green,
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 8,
                 ),
-                Expanded(child: Text('2134341 \$/')),
+                Text("210.000 VND"),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Column(
+            const SizedBox(height: 20),
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.blue,
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Kabul Afganistan'),
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      width: 13,
-                      height: 10,
-                      child: Text('AFG'),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                        'Exact Location for the or address of city. like G.O location'),
-                  ],
-                )),
+                Icon(Icons.location_on_outlined),
+                SizedBox(width: 8),
+                Expanded(child: Text('Location: Kabul Afghanistan')),
               ],
             ),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Icon(
-                  Icons.text_snippet_outlined,
-                  color: Colors.blueGrey,
+                  Icons.qr_code,
+                  color: Colors.black,
                 ),
-                SizedBox(height: 12),
-                Text('you Can cancel your pending bookings'),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Text(
+                    "Show this QR code to the ticket counter to receive your ticket",
+                  ),
+                )
               ],
             ),
-            SizedBox(
-              child: Divider(
-                thickness: 1,
-              ),
+            const Divider(),
+            const SizedBox(
+              height: 20,
             )
           ],
         ),

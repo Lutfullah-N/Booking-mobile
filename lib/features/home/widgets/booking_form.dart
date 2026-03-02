@@ -1,50 +1,56 @@
-import 'package:booking/features/home/widgets/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class BookingForm extends StatefulWidget {
-  const BookingForm({super.key});
-
+  final Function(String) onTitleChanged;
+  final Function(String) onServiceChanged;
+  final Function(String) onCostChanged;
+  final Function(String) onLocationChanged;
+  const BookingForm(
+      {super.key,
+      required this.onTitleChanged,
+      required this.onServiceChanged,
+      required this.onCostChanged,
+      required this.onLocationChanged});
   @override
-  // ignore: library_private_types_in_public_api
-  _BookingForm createState() => _BookingForm();
+  State<BookingForm> createState() => _BookingForm();
 }
 
 class _BookingForm extends State<BookingForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _fromKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    Title(color: Colors.white, child: Text('hi'));
     return Form(
-      key: _formKey,
+      key: _fromKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter the value Con not be empty';
-              }
-              return null;
-            },
+            decoration: const InputDecoration(labelText: "Name"),
+            onChanged: widget.onTitleChanged,
+            validator: (value) => value == null || value.isEmpty
+                ? "Enter the name of Booking"
+                : null,
           ),
-          SizedBox(
-            height: 10,
+          TextFormField(
+            decoration: const InputDecoration(labelText: "Service Type"),
+            onChanged: widget.onServiceChanged,
+            validator: (value) => value == null || value.isEmpty
+                ? "Enter the Service Type"
+                : null,
           ),
-          DateTimePickerScreen(),
-          SizedBox(
-            height: 20,
+          TextFormField(
+            decoration: const InputDecoration(labelText: "Cost"),
+            keyboardType: TextInputType.number,
+            onChanged: widget.onCostChanged,
+            validator: (value) => value == null || value.isEmpty
+                ? "Enter the Price of Service"
+                : null,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Proccessing Data')),
-                    );
-                  }
-                },
-                child: const Text('Submit')),
+          TextFormField(
+            decoration: const InputDecoration(labelText: "Location"),
+            onChanged: widget.onLocationChanged,
+            validator: (value) =>
+                value == null || value.isEmpty ? "Enter The location" : null,
           )
         ],
       ),
