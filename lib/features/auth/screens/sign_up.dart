@@ -21,16 +21,18 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
-  late final TextEditingController _ruleController;
+  late final TextEditingController _roleController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _confirmController;
   bool _isLoading = false;
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _userNameController = TextEditingController();
-    _ruleController = TextEditingController();
+    _roleController = TextEditingController();
     _passwordController = TextEditingController();
+    _confirmController = TextEditingController();
     super.initState();
   }
 
@@ -38,8 +40,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
   void dispose() {
     _userNameController.dispose();
     _emailController.dispose();
-    _ruleController.dispose();
+    _roleController.dispose();
     _passwordController.dispose();
+    _confirmController.dispose();
     super.dispose();
   }
 
@@ -73,8 +76,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Future<String> uploadProfileImage(File imageFile, String userId) async {
     final ref =
         FirebaseStorage.instance.ref().child("profile_images/$userId.jpg");
-    await ref.putFile(imageFile);
-    return await ref.getDownloadURL();
+    try {
+      await ref.putFile(imageFile);
+      return await ref.getDownloadURL();
+    } catch (e) {
+      throw Exception('Image Upload Failed: $e');
+    }
   }
 
   Future<void> saveUserProfile(User user) async {
@@ -86,7 +93,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'email': user.email,
       'username': _userNameController.text.trim(),
-      'rule': _ruleController.text.trim(),
+      'rule': _roleController.text.trim(),
       'createdAt': FieldValue.serverTimestamp(),
       'avatarURL': avatarUrl,
     });
@@ -106,51 +113,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
       if (user != null) {
         await saveUserProfile(user);
-
-        if (!user.emailVerified) {
-          await user.sendEmailVerification();
-          if (!mounted) return;
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Verify Your Email'),
-                content: Text(
-                  'A verification email has been sent to ${user.email}. '
-                  'Please check your inbox and click the link to verify.',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () async {
-                      await user.sendEmailVerification();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Verification email resent')),
-                      );
-                    },
-                    child: const Text('Resend'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed('/login');
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
-        }
+        if (!mounted) return;
+        Future.delayed(const Duration(seconds: 1), () {
+          if (mounted) {
+            Navigator.pushNamed(context, '/otpBasic', arguments: user.email);
+          }
+        });
+        await user.sendEmailVerification();
       }
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content:
-                Text('Registered successfully! Please verify your email.')),
-      );
-      await saveUserProfile(user!);
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -163,127 +133,133 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      key: _formKey,
-      child: Card(
-        elevation: 8.0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                'Create Account',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: _userNameController,
-                validator: (value) =>
-                    value!.isEmpty ? 'Enter your display name' : null,
-                decoration: _inputDecoration('Username', Icons.person),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) return 'Enter your email';
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Enter a valid email';
-                  }
-                  return null;
-                },
-                decoration: _inputDecoration('Email', Icons.email),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _ruleController,
-                validator: (value) => value!.isEmpty ? "Enter your role" : null,
-                decoration:
-                    _inputDecoration('Role (user/provider)', Icons.rule),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                obscureText: true,
-                controller: _passwordController,
-                validator: (value) =>
-                    value!.isEmpty ? "Password must not be empty" : null,
-                decoration: _inputDecoration('Password', Icons.lock),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                obscureText: true,
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
-                decoration: _inputDecoration('Confirm Password', Icons.lock),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: _profileImage != null
-                        ? FileImage(_profileImage!)
-                        : null,
-                    child: _profileImage == null
-                        ? const Icon(Icons.person, size: 30)
-                        : null,
+    return Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: 8.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0)),
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Create Account',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                  const SizedBox(width: 12),
-                  TextButton(
-                    onPressed: () async {
-                      final XFile? image =
-                          await _picker.pickImage(source: ImageSource.gallery);
-                      if (image != null) {
-                        setState(() => _profileImage = File(image.path));
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: _userNameController,
+                    validator: (value) =>
+                        value!.isEmpty ? 'Enter your display name' : null,
+                    decoration: _inputDecoration('Username', Icons.person),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter your email';
                       }
+                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                        return 'Enter a valid email';
+                      }
+                      return null;
                     },
-                    child: const Text('Upload Profile'),
+                    decoration: _inputDecoration('Email', Icons.email),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _roleController,
+                    validator: (value) =>
+                        value!.isEmpty ? "Enter your role" : null,
+                    decoration:
+                        _inputDecoration('Role (user/provider)', Icons.rule),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    validator: (value) =>
+                        value!.isEmpty ? "Password must not be empty" : null,
+                    decoration: _inputDecoration('Password', Icons.lock),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    obscureText: true,
+                    controller: _confirmController,
+                    validator: (value) {
+                      if (value != _passwordController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                    decoration:
+                        _inputDecoration('Confirm Password', Icons.lock),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: _profileImage != null
+                            ? FileImage(_profileImage!)
+                            : null,
+                        child: _profileImage == null
+                            ? const Icon(Icons.person, size: 30)
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      TextButton(
+                        onPressed: () async {
+                          final XFile? image = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          if (image != null) {
+                            setState(() => _profileImage = File(image.path));
+                          }
+                        },
+                        child: const Text('Upload Profile'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _register,
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text('Register'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/signOptUp');
+                        },
+                        child: const Text('Sign up Options'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed('/login');
+                        },
+                        child: const Text('Sign in'),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _register,
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Register'),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signOptUp');
-                    },
-                    child: const Text('Sign up Options'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/login');
-                    },
-                    child: const Text('Sign in'),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

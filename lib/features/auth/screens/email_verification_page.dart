@@ -23,6 +23,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/login');
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Email not verified yet."),
@@ -58,6 +59,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             TextButton(
               onPressed: () async {
                 await widget.user.sendEmailVerification();
+                // ignore: use_build_context_synchronously
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Verification email resent")),
                 );

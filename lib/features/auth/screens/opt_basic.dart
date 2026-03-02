@@ -36,10 +36,7 @@ class OptBasic extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Expanded(
-                  child: Divider(
-                thickness: 2,
-              )),
+              const Divider(thickness: 2),
               SizedBox(
                 height: 40,
               ),
@@ -61,26 +58,29 @@ class OptBasic extends StatelessWidget {
                     ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(
-                          onPressed: () {},
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            alignment: Alignment.center,
+                          ),
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/signOptUp');
+                          },
                           child: Text(
                             'Cancel',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white,
-                                backgroundColor: Colors.red),
                           )),
-                      TextButton(
-                          onPressed: () {},
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              alignment: Alignment.center),
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
                           child: Text(
                             'Confirm',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white,
-                                backgroundColor: Colors.green),
                           ))
                     ],
                   )
@@ -92,16 +92,19 @@ class OptBasic extends StatelessWidget {
                   margin: const EdgeInsets.all(2),
                   padding: const EdgeInsets.all(2),
                   color: Colors.green,
-                  child: TextButton(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 15)),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(context, '/confirmOtp');
                       },
                       child: Text(
                         'User OTP',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20),
+                        style: TextStyle(fontSize: 18),
                       ))),
             ],
           ),

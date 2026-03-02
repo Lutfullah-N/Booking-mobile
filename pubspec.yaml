@@ -18,9 +18,17 @@ dependencies:
   firebase_messaging: ^16.1.1
   carousel_slider: ^5.0.0
   dots_indicator: ^2.1.0
-  pin_code_fields: ^9.0.0
+  pin_code_fields: ^9.1.0
   image_picker: ^1.2.1
   firebase_storage: ^13.0.6
+  shared_preferences: ^2.5.4
+  provider: ^6.1.5+1
+
+  # ✅ Correct localization setup
+  flutter_localizations:
+    sdk: flutter
+  pin_code_text_field: ^1.8.0
+intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -29,6 +37,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/data.json
