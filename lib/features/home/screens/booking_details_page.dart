@@ -1,7 +1,9 @@
+import 'package:booking/features/home/models/property.dart';
 import 'package:flutter/material.dart';
 
 class BookingDetailsPage extends StatefulWidget {
-  const BookingDetailsPage({super.key});
+  final Property property;
+  const BookingDetailsPage({super.key, required this.property});
 
   @override
   State<StatefulWidget> createState() => _BookingDetailsPage();
@@ -26,7 +28,7 @@ class _BookingDetailsPage extends State<BookingDetailsPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                'Title: booking Title',
+                'Title: ${widget.property.title}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -81,7 +83,7 @@ class _BookingDetailsPage extends State<BookingDetailsPage> {
                     child: Text(
                       'Payment',
                       style: TextStyle(fontSize: 16),
-                    ))
+                    )),
               ],
             )
           ],

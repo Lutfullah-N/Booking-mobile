@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:booking/features/home/screens/booking_details_page.dart';
 import 'package:booking/shared/extras/custom_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,8 +95,18 @@ class _BookingPageState extends State<BookingPage> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: properties
-                              .map((property) =>
-                                  CurrentBooking(property: property))
+                              .map((property) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => BookingDetailsPage(
+                                              property: property),
+                                        ),
+                                      );
+                                    },
+                                    child: CurrentBooking(property: property),
+                                  ))
                               .toList(),
                         ),
                       ),

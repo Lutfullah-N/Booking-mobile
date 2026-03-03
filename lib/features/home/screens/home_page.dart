@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:booking/features/home/models/property.dart';
 import 'package:booking/features/home/widgets/current_booking.dart';
 import 'package:booking/shared/extras/custom_bottom_nav.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -14,8 +15,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isProvider = true;
   List<Property> properties = [];
-
+  User? get currentUser => FirebaseAuth.instance.currentUser;
+  String? get username => currentUser?.displayName;
+  String? get profileImage => currentUser?.photoURL;
   @override
   void initState() {
     super.initState();
@@ -25,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadJsonData() async {
     final String response = await rootBundle.loadString('assets/booking.json');
     final List<dynamic> data = json.decode(response);
+
     setState(() {
       properties = data.map((json) => Property.fromJson(json)).toList();
     });
@@ -67,12 +72,16 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/setting');
+                },
               ),
               ListTile(
                 leading: Icon(Icons.help),
                 title: Text('Help'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/otpBasic');
+                },
               ),
               ListTile(
                 leading: Icon(Icons.room_service),
@@ -82,16 +91,36 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 leading: Icon(Icons.logout),
                 title: Text('Logout'),
-                onTap: () {},
-              ),
-              Text('this part must show just for providers'),
-              ListTile(
-                leading: Icon(Icons.add_sharp),
-                title: Text('Add Booking'),
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/addBooking');
+                onTap: () async {
+                  final shouldLogout = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: const Text('Confirm Logout'),
+                            content:
+                                const Text('Are you sure you want to logout!'),
+                            actions: [
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: const Text('Cancel')),
+                              TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text('Logout'))
+                            ],
+                          ));
+                  if (shouldLogout ?? false) {
+                    await FirebaseAuth.instance.signOut();
+                  }
                 },
-              )
+              ),
+              if (isProvider)
+                ListTile(
+                  leading: Icon(Icons.add_sharp),
+                  title: Text('Add Booking'),
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/addBooking');
+                  },
+                )
             ],
           ),
         ),
