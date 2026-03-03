@@ -23,7 +23,7 @@ dependencies:
   firebase_storage: ^13.0.6
   shared_preferences: ^2.5.4
   provider: ^6.1.5+1
-
+  google_sign_in: ^7.2.0
   # ✅ Correct localization setup
   flutter_localizations:
     sdk: flutter
