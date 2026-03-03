@@ -40,7 +40,9 @@ class PhoneUsername extends StatelessWidget {
                 decoration: InputDecoration(
                     hintText: 'Mohammad',
                     filled: true,
+                    // ignore: deprecated_member_use
                     fillColor: Colors.white.withOpacity(0.2),
+                    // ignore: deprecated_member_use
                     hintStyle: TextStyle(color: Colors.grey.withOpacity(0.3))),
               ),
               SizedBox(

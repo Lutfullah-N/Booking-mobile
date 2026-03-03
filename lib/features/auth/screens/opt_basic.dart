@@ -8,108 +8,111 @@ class OptBasic extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'OTP Basic',
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.05,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  )),
-              SizedBox(height: 10),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'You can Verify from the screen no Email!',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+              // Title
+              Text(
+                'OTP Basic',
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.06,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              const SizedBox(height: 10),
+
+              // Subtitle
+              const Text(
+                'You can verify from this screen without email!',
+                style: TextStyle(fontSize: 16, color: Colors.white70),
               ),
-              const Divider(thickness: 2),
-              SizedBox(
-                height: 40,
+              const SizedBox(height: 20),
+
+              const Divider(thickness: 2, color: Colors.white24),
+              const SizedBox(height: 30),
+
+              // Info box
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  'Verify and agree to sign in with your email address. '
+                  'For stronger security, OTP verification is recommended.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              Column(
+              const SizedBox(height: 40),
+
+              // Action buttons row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        'Verify and agree to sign in with email Address. not high version security recommended use OTP!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 18,
-                            // ignore: deprecated_member_use
-                            backgroundColor: Colors.white.withOpacity(0.5),
-                            color: Colors.black),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/signOptUp');
+                    },
+                    child: const Text('Cancel'),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            alignment: Alignment.center,
-                          ),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/signOptUp');
-                          },
-                          child: Text(
-                            'Cancel',
-                          )),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              alignment: Alignment.center),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
-                          },
-                          child: Text(
-                            'Confirm',
-                          ))
-                    ],
-                  )
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    child: const Text('Confirm'),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(2),
-                  padding: const EdgeInsets.all(2),
-                  color: Colors.green,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 15)),
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/confirmOtp');
-                      },
-                      child: Text(
-                        'User OTP',
-                        style: TextStyle(fontSize: 18),
-                      ))),
+              const SizedBox(height: 30),
+
+              // OTP button
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/confirmOtp');
+                  },
+                  child: const Text(
+                    'Use OTP',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-      )),
+      ),
     );
   }
 }
