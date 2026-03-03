@@ -1,6 +1,7 @@
 import 'package:booking/features/auth/screens/log_in.dart';
 import 'package:booking/features/auth/screens/opt_basic.dart';
 import 'package:booking/features/auth/screens/phone_sign_up.dart';
+import 'package:booking/features/auth/screens/setting_page.dart';
 import 'package:booking/features/auth/screens/sign_up.dart';
 import 'package:booking/features/auth/screens/user_profile.dart';
 import 'package:booking/features/home/screens/add_booking.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String addBooking = '/addBooking';
   static const String makeBooking = '/makeBooking';
   static const String login = '/login';
+  static const String tools = '/setting';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -65,6 +67,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const AddBooking());
       case homePage:
         return MaterialPageRoute(builder: (_) => HomePage());
+      case tools:
+        return MaterialPageRoute(builder: (_) => SettingPage());
+      // case makeBooking:
+      //  return MaterialPageRoute(builder: (_)=> const MakeBooking);
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

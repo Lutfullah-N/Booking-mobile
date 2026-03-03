@@ -82,77 +82,77 @@ class _WelcomeScreen extends State<WelcomeScreen> {
               IconButton(
                 onPressed: () {
                   showModalBottomSheet(
-                      context: Navigator.of(context).context,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20)),
-                      ),
-                      backgroundColor: Colors.white,
-                      builder: (BuildContext context) {
-                        String selectedLanguage = 'English';
-                        return StatefulBuilder(
-                          builder:
-                              (BuildContext context, StateSetter setState) {
-                            return Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text(
-                                    'Choose Language',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    backgroundColor: Colors.white,
+                    builder: (BuildContext context) {
+                      return StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                          return Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'Choose Language',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  const SizedBox(height: 10),
-                                  RadioListTile<String>(
-                                    value: "English",
-                                    title: const Text('English'),
-                                    // ignore: deprecated_member_use
-                                    groupValue: selectedLanguage,
-                                    // ignore: deprecated_member_use
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedLanguage = value!;
-                                      });
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: const Icon(
-                                        Icons.arrow_right_alt_rounded),
-                                    title: const Text('Others'),
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          context: context,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(20)),
+                                ),
+                                const SizedBox(height: 10),
+                                RadioListTile<String>(
+                                  value: "English",
+                                  title: const Text('English'),
+                                  // ignore: deprecated_member_use
+                                  groupValue: selectedLanguage,
+                                  // ignore: deprecated_member_use
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedLanguage = value!;
+                                    });
+                                  },
+                                ),
+                                ListTile(
+                                  leading:
+                                      const Icon(Icons.arrow_right_alt_rounded),
+                                  title: const Text('Others'),
+                                  onTap: () {
+                                    Navigator.pop(context); // close first sheet
+                                    showModalBottomSheet(
+                                      context: context,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      builder: (context) {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text('Choose Language from List'),
+                                              SizedBox(height: 20),
+                                              LanguageDropdown(),
+                                            ],
                                           ),
-                                          backgroundColor: Colors.white,
-                                          builder: (BuildContext context) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(20),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  const Text(
-                                                      'Choose Language from List'),
-                                                  const SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  LanguageDropdown(),
-                                                ],
-                                              ),
-                                            );
-                                          });
-                                    },
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      });
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
                 },
                 icon: const Icon(
                   Icons.translate,

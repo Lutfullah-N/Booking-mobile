@@ -1,6 +1,7 @@
 import 'package:booking/features/home/screens/my_booking.dart';
 import 'package:booking/features/home/widgets/booking_form.dart';
 import 'package:booking/features/home/widgets/date_time_picker.dart';
+import 'package:booking/shared/extras/custom_bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class AddBooking extends StatefulWidget {
@@ -37,15 +38,27 @@ class _AddBookingState extends State<AddBooking> {
             ),
             const SizedBox(height: 20),
             DateTimePickerScreen(
-              onDateTimeSelected: (val) => bookingTime = val,
+              onDateTimeSelected: (val) {
+                setState(() {
+                  bookingTime = val;
+                });
+              },
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
               ),
               onPressed: () {
+                if (bookingTitle.isEmpty || bookingTime.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please complete all fields")),
+                  );
+                  return;
+                }
+
                 final newBooking = Booking(
                   title: bookingTitle,
                   time: bookingTime,
@@ -53,28 +66,17 @@ class _AddBookingState extends State<AddBooking> {
                   image: "assets/images/hotel.png",
                 );
 
-                Navigator.pop(
-                    context, newBooking); // return booking to MyBooking
+                Navigator.pop(context, newBooking);
               },
-              child: const Text("Done",
-                  style: TextStyle(fontSize: 18, color: Colors.white)),
+              child: const Text(
+                "Continue",
+                style: TextStyle(fontSize: 14, color: Colors.white),
+              ),
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  final newBooking = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddBooking()),
-                  );
-                  if (newBooking != null && newBooking is Booking) {
-                    setState(() {
-                      // bookings.add(newBooking);
-                    });
-                  }
-                },
-                child: const Text('Add Booking'))
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNav(currentIndex: 0),
     );
   }
 }
