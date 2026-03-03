@@ -5,36 +5,11 @@ import 'package:booking/firebase_options.dart';
 import 'package:booking/l10n/app_localizations.dart';
 import 'package:booking/l10n/language_provider.dart';
 import 'package:booking/routes/app_routes.dart';
+import 'package:booking/theme/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// void requestNotificationPermission() async {
-//   FirebaseMessaging messaging = FirebaseMessaging.instance;
-//   NotificationSettings settings = await messaging.requestPermission(
-//     alert: true,
-//     announcement: false,
-//     badge: true,
-//     carPlay: false,
-//     criticalAlert: false,
-//     provisional: false,
-//     sound: true,
-//   );
-//   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-//     const Text('User granted permission');
-//   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-//     const Text('User granted provisional permission');
-//   } else {
-//     const Text('User declined or has not accepted permission');
-//   }
-// }
-
-// final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//     FlutterLocalNotificationsPlugin();
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   print('Handling background message: ${message.messageId}');
-// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,18 +18,32 @@ Future<void> main() async {
   );
   final languageProvider = LanguageProvider();
   await languageProvider.loadLocale();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // String? token = await FirebaseMessaging.instance.getToken();
-  // print('FCM Token: $token');
-  // await NotificationService.init();
-  runApp(ChangeNotifierProvider.value(
-    value: languageProvider,
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => ThemeProvider(),
+      ),
+      ChangeNotifierProvider.value(
+        value: languageProvider,
+      ),
+    ],
     child: const MyApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  @override
+  State<MyApp> createState() => _MyApp();
+}
+
+class _MyApp extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.system;
+  void toggleTheme(bool isDark) {
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +51,11 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme:
+          ThemeData(brightness: Brightness.light, primarySwatch: Colors.blue),
+      darkTheme:
+          ThemeData(brightness: Brightness.dark, primarySwatch: Colors.blue),
+      themeMode: _themeMode,
       locale: languageProvider.locale,
       supportedLocales: const [
         Locale('en'),
@@ -72,13 +66,7 @@ class MyApp extends StatelessWidget {
       ],
       localizationsDelegates: const [
         AppLocalizations.delegate,
-        // GlobalMaterialLocalizations.delegate,
-        // GlobalWidgetsLocalizations.delegate,
-        // GlobalCupertinoLocalizations.delegate,
       ],
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(103, 58, 183, 1))),
       initialRoute: AppRoutes.welcomePage,
       onGenerateRoute: AppRoutes.generateRoute,
     );
